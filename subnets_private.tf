@@ -25,3 +25,15 @@ resource "aws_subnet" "eks_subnet_private_1b" {
     }
   )
 }
+
+resource "aws_route_table_association" "eks_private_1a_association" {
+  subnet_id      = aws_subnet.eks_subnet_private_1a.id
+  route_table_id = aws_route_table.eks_private-1a.id
+
+}
+
+resource "aws_route_table_association" "eks_private_1b_association" {
+  subnet_id      = aws_subnet.eks_subnet_private_1b.id
+  route_table_id = aws_route_table.eks_private-1b.id
+
+}
