@@ -5,5 +5,11 @@ output "eks_vpc_config" {
 }
 
 output "oidc" {
-  value = data.tls_certificate.eks_cluster.certificates[*].sha1_fingerprint
+  value = aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer
+}
+
+output "eks_cluster_name" {
+  description = "Nome do cluster EKS"
+  value       = aws_eks_cluster.eks_cluster.id
+
 }
