@@ -13,8 +13,13 @@ resource "aws_eks_node_group" "eks_mng_nodegroup" {
     min_size     = 1
   }
 
-  capacity_type  = "SPOT"
+  capacity_type  = "ON_DEMAND"
   instance_types = ["t3.medium"]
+
+  launch_template {
+    id      = aws_launch_template.eks_node_group.id
+    version = "$Latest"
+  }
 
   tags = merge(
     var.tags,
@@ -26,7 +31,10 @@ resource "aws_eks_node_group" "eks_mng_nodegroup" {
   depends_on = [
     aws_iam_role_policy_attachment.eks_managed_nodegroup_role_attachment_worker,
     aws_iam_role_policy_attachment.eks_managed_nodegroup_role_attachment_ecr,
-    aws_iam_role_policy_attachment.eks_managed_nodegroup_role_attachment_cni
+    aws_iam_role_policy_attachment.eks_managed_nodegroup_role_attachment_cni,
+    aws_launch_template.eks_node_group
   ]
+
+  //set 
 
 }
